@@ -1,0 +1,30 @@
+module use /g/data/vk83/modules
+module load payu
+
+payu clone -b expt -B release-preindustrial+concentrations https://github.com/ACCESS-NRI/access-esm1.5-configs name
+
+vim config.yaml
+  # - Change jobname
+  # - Change calendar date
+
+cp /g/data/nf33/jma548/EAE4027/ACCESS-ESM1.5/scripts/* scripts/
+
+bash scripts/warm-start.sh xxx (e.g. 770)
+
+# Perform any namelist changes
+vim ice/cice_in.nml
+  # - e.g. change albedos to 1 and albedo_type to ccsm3
+
+vim atmosphere/namelists
+  # - change alpham = melting snow albedo
+  # alphac = cold dry snow albedo
+  # alphab = bare ice albedo
+
+
+payu setup (just to check if everything is working)
+
+payu sweep
+
+pau run -n 10
+
+
