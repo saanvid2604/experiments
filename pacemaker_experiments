@@ -1,0 +1,59 @@
+1/04/26
+                                                #find/create your ncl file
+vim Temperature_restoring_file_eqPac_3C.ncl
+
+                                                #edit this file as per you want and then run to create two output files restore_mask.nc and temp_sfc_restore.nc
+ncl Temperature_restoring_file_eqPac_3C.ncl
+#creates 
+  restore_mask.nc
+  temp_sfc_restore.nc
+
+                                                #should have a picontrol directory ready with warmstart loaded - check 'creating-warm-start-files' to remember how to do that
+cd /scratch/lo70/sd3017/access-esm/warmstart_picontrol
+
+                                                #if you want to choose and set the branch year and run year
+vim scripts/warm-start.sh
+# in here: 
+  # The default branch year for the historical run starting in 1850 is year 0541 in PI-01
+  # PI-01 has restart files saved every ten years, so you could say branch a run from year 0701, 0711, 0721, 0731 and so on
+  # mines on 670 which is fine 
+
+                                                #update config.yaml
+vim config.yaml
+calendar
+start
+year: 670                                       #make this the same date as the warm-start.sh export_year
+
+walltime: 2:30:00 (for 1 year)
+#this only changes if you change your runspersub
+#runspersub is purely a job scheduling choice - doesnt affect any of your output - so when its at runspersub: 1 --> 10 jobs of 1 year each vs runspersub: 5 --> 2 jobs of 5 years each
+# more frequent resubmissions so if a job fails you dont lose as much progress, but other side fewer submissions to reduce queue waiting time
+
+#in name: Ocean component
+                                                #add code at the end
+# Adding my pacemaker SST restoring files (Saanvi)
+        - /g/data/lo70/sd3017/23_02_SO_warming/final_SO_warming_files/restore_mask.nc
+        - /g/data/lo70/sd3017/23_02_SO_warming/final_SO_warming_files/temp_sfc_restore.nc
+
+                                              #need to tell the model to look for these new files added
+vim ocean/input.nml
+#in &ocean_sbc_nml
+temp_restore_tscale=6.0                       #restoring timescale = 6 days
+read_restore_mask=.true.
+
+./scripts/warm-start.sh
+payu setup
+ls work/output/INPUT                         #check if restore mask and temp sfc restore files are there
+
+payu sweep                                   # if you are cleaning a already runfailed model then payu sweep --hard
+payu run -n 10                               # for 10 years --> takes about 24 hours for it to run
+
+
+8/04/26
+# if you want to run more experiments with different start dates
+
+cp -a warmstart_picontrol warmstart_picontrol_700
+payu sweep --hard 
+# change dates in config.yaml and warm-start.sh from 670 --> 700
+./scripts/warm-start.sh
+.... follow from above
