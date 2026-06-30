@@ -1,0 +1,249 @@
+Albedo test runs
+
+28/04/2026
+- created a control_570 file with warmstart as branching (as opposed to coldstart) and year 570 set in warmstart.sh and config.yaml files
+- created an albedo_570pi run with warmstart and config.yaml set as 570
+      - changes in cice_in.nml
+          - r_snw = 0. ---> -6.0
+          - r_ice = 0. ---> -6.0
+          - r_pnd = 0. ---> -6.0
+- created postprocessing file in /scratch/lo70/sd3017/access-esm/post_processing
+- re-editied aice_pp.csh shell script to include both aice (SIC) and hi (sea ice thickness) 
+- created respective post-processed .nc files in their own folders
+- plotted aice and hi to compare differences --> control and albedo experiment look exactly the same so didn't work
+
+29/04/2026
+- payu sweeped from albedo_570pi 
+- edited cice_in.nml 
+    - shortwave = "default" ---> "dEdd" 
+        this is changing it from default to Delta-Eddington shortwave scheme. The above three r_ parameters are tuning parameters for the shortwave scheme and they only take effect when the 
+        shortwave method is changed. 
+- payu run --> will now create output002 (check this for changes)
+- ran albedo and control again (002) but they look exactly the same. so changing shortwave didn't work.
+
+- changed shortwave back to "default" and the r_ values back to 0.
+- will now change these values
+- , albicev         = 0.86 ---> 0.75
+  , albicei         = 0.44 ---> 0.35
+  , albsnowv        = 0.98 ---> 0.90
+  , albsnowi        = 0.70 ---> 0.60
+
+- output003 ran (3:40 - 5:00?). do proper post-processing to check if anything worked not just ncview
+- start running control output 3
+
+
+30/04/2026
+- compared variables in new file albedo_experiment_outputs but in ncview all anomalies are 0 --> so didn't work
+- changing ice_ic = 'default' --> '/g/data/lo
+- restart = .false. ---> .true.
+
+4/05/2026
+- changing from 'x' ---> 'm' in the ice_history.nml file
+      - f_fswabs
+      - f_albice
+      - f_albsno
+      - f_albpnd
+- theres a lot of variables here so possibly also have to turn them on/off
+- also tried restore_ice = '.false.' ---> '.true.'
+
+6/05/2026
+- trying extremes: so changing all the albi... to 1 and ahmax = 0.3 ---> 0.5
+- successful run
+
+
+7/05/2026
+- variables that i changed only had non-zero anomalies so albice, albsno, albsni
+      - albsni = snow/ice broad band albedo
+      - albsno = snow albedo
+      - albice = ice albedo
+
+- all the others i tried didn't work
+      - ice component
+            - aice = sea ice concentration
+            - hi = sea ice thickness
+            - albpnd = melt pond albedo
+            - flwup = upward longwave flux
+            - fsurf = net surface heat flux
+            - fmeltt = net surface heat flux causing melt
+      - atmosphere component
+            - fld_s01i201 = surface net downward shortwave flux
+
+8/05/2026
+Reasons
+- alb variables are constants used internally in radiation calculations not prognostic variables
+- model physics didn't have enough time to respond + it was monthly output so any changes could have been averaged
+- the 3 variables that showed anomaly change --> indicates that the model only initialised with the altered values at startup then after the first timestep/month either
+      - the albedo became diagnostically recalculated
+      - overwritten by the active albedo scheme
+      - meaning: january retained the initialised perturbation, afterward the model reverted to internally calculated albedo
+
+- ran again changing the ice_ic back to 'default' from '/g/data/p73/archive/CMIP6/ACCESS-ESM1-5/PI-02/restart/ice/iced.05700101' for payu run -n 5 years
+
+
+11/05/2026
+- ran control for -n 5 years
+- plots - just run for 1 year, should see some sort of changes in sea ice
+
+12/05/2026
+- deleted output010 and restart 010 
+- change albedo_type = 'default' ---> 'constant'
+- run again - new_albedo570pi
+
+
+13/05/2026
+- change albedo_type = 'constant' ---> 'ccsm2'
+- runtype = 'initial' ---> 'continue'
+
+
+15/05/2025
+- 770runs ( Trying these without a warmstart and also a different date )
+      - control770
+            - clone --> change config.yaml --> change to output albedo variables (ice_history.nml)
+      - albedo770
+            - clone --> change config.yaml --> change to output albedo variables (ice_history.nml) --> change albedo variables to 0 and albedo_type to 'constant'
+
+PYTHON WORKBOOK = new_albedo_trials (/scratch/lo70/sd3017/access-esm/new_control570/pre-existing_control571/)
+
+
+18/05/2025
+- BREAKTHROUGH: changing albedo_type to 'ccsm3' WORKS! 
+- comparing the Year 770 only and creating new directories so I don't have to keep adding years
+- Also, warm-start branching part is compulsory if you want to start from a certain date like 770, otherwise the run just starts from 101. So its not a "warming from a the beginning" mechanism, 
+its just named like that.
+- the restart/history files are the CONTROL: so /g/data/p73/CMIP6/ACCESS-ESM1-5/PI-02/iceh.0770-01-01.nc --> these are the control: confirm if this is right.
+- some things to figure out:
+      - check if the r_sno parameters/ shortwave stuff does anything (next run)
+      - figure out how to only change the southern hemisphere
+
+
+/scratch/lo70/sd3017/access-esm/post_processing/574run/albedo_run.ipynb
+
+
+20/05/2025
+** warmstart control and p73 controls are the same 
+-------------------------------
+TRIAL 1 ---> outcome: no change
+-------------------------------
+1. albedo_880 = default
+                albedos + ahmax = 0
+2. r_parameters880 = default
+                     r_parameters = 1
+
+
+-------------------------------
+TRIAL 2 ---> outcome: no change
+-------------------------------
+1. albedo_880_2 = albedo_type = 'ccsm3'
+                albedos + ahmax = 0
+2. r_parameters880_2 = albedo_type = 'ccsm3'
+                     r_parameters = 1
+
+-------------------------------
+TRIAL 3 ---> outcome: no change
+-------------------------------
+1. albedo_880_3 = albedo_type = 'constant'
+                albedos + ahmax = 0
+2. r_parameters880_3 = shortwave = 'dEdd'
+                     r_parameters = 1
+
+---> config.yaml = runtime only for 5 months
+
+
+----------------------------------
+UM_COMPONENT ---> outcome: CHANGE
+----------------------------------
+      l_ssice_albedo = .true. --> .false.
+      albedos + ahmax = 0
+
+
+-----------------------------------
+UM_COMPONENT2 ---> outcome: CHANGE
+-----------------------------------
+      l_use_spec_sea = .true. --> .false.  
+      albedos + ahmax = 0
+
+
+-------------------------------------
+COLDSTART_RUN ---> outcome: no change
+-------------------------------------
+      no bash/warm-start.sh (so starting from 101)
+      albedos + ahmax = 0
+
+
+---------------------------------------------
+ALBEDO+RPARAMETERS880 ---> outcome: no change
+---------------------------------------------
+      shortwave = dEdd
+      albedo_type = constant
+      albedos + ahmax = 0
+      r_parameters = 1
+
+Posted on HIVE --> my suspicion that albedos are controlled by UM completely is true! so don't even work in the CICE component. 
+
+
+25/05/26
+=============================================
+Exp1 = melting_snow
+            alpham = 0.72 ---> 0
+
+Exp2 = cold-dry_snow
+            alphac = 0.80 ---> 0
+
+Exp3 = both_snow
+            alpham = 0
+            alphac = 0
+
+Exp4 = bareice_albedo
+            alphab = 0
+=============================================
+
+
+=============================================
+Exp1 = melting_snow1
+            alpham = 0.72 ---> 1
+
+Exp2 = cold-dry_snow1
+            alphac = 0.80 ---> 1
+
+Exp3 = both_snow1
+            alpham = 1
+            alphac = 1              ===> the above three immediately fail to run, so going to try with 0.99 instead so its a bit less extreme 
+
+Exp4 = bareice_albedo1
+            alphab = 1
+=============================================
+
+=============================================
+Exp1 = melting_snow0.99
+            alpham = 0.72 ---> 0.99
+
+Exp2 = cold-dry_snow0.99
+            alphac = 0.80 ---> 0.99
+
+Exp3 = both_snow0.99
+            alpham = 0.99
+            alphac = 0.99            
+=============================================
+
+
+
+2/06/2026
+- all_albedo_0.2 
+      - alpham = 0.2
+      - alphac = 0.2
+      - alphab = 0.2
+
+
+3/06/2026
+- the 0.2 albedo plots show that AICE melts even more than the anomalously low albedo (0) plots. My understanding is that in the first few months all the snow melts away so the 0 value doesn't
+  have a chance to do anything. Once the snow is melted, only the bare ice is left, so it takes a bigger effect.
+
+- all_albedo_0
+      - alpham = 0
+      - alphab = 0
+      - alphac = 0
+
+- all_albedo_0.99 (again value 1 didn't run)
+      - alpham = 0.99
+      - alphab = 0.99
+      - alphac = 0.99 
