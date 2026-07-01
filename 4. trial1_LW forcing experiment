@@ -5,10 +5,20 @@ normal 1. creating run directory steps (880)
 
 cp LW_local_forcing_ACCESS_Antarctica.nc to here (/scratch/lo70/sd3017/access-esm/LW_forcing_trials/trial1/work/ice/INPUT
 
-3. change cice_in.nml namelist
-  , prescribed_lw   = .true.
-  , prescribed_lw_file = './INPUT/LW_local_forcing_ACCESS_Antarctica.nc'           #### this will point to the just added file
-  , prescribed_lw_var = 'pres_lw'
+deleted this from here
+~~3. change cice_in.nml namelist~~  
+~~, prescribed_lw   = .true.~~  
+~~, prescribed_lw_file = ‘./INPUT/LW_local_forcing_ACCESS_Antarctica.nc’           #### this will point to the just added file~~  
+~~, prescribed_lw_var = ‘pres_lw’~~
+to here
+
+3. In config.yaml under modules use
+- keep existing (vk83)
+- /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/
+
+no changes in cice exe part. 
+
+Runs!
 
 
   
