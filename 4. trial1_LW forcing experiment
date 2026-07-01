@@ -1,0 +1,14 @@
+normal 1. creating run directory steps (880)
+
+
+2. Run payu setup
+
+cp LW_local_forcing_ACCESS_Antarctica.nc to here (/scratch/lo70/sd3017/access-esm/LW_forcing_trials/trial1/work/ice/INPUT
+
+3. change cice_in.nml namelist
+  , prescribed_lw   = .true.
+  , prescribed_lw_file = './INPUT/LW_local_forcing_ACCESS_Antarctica.nc'           #### this will point to the just added file
+  , prescribed_lw_var = 'pres_lw'
+
+
+  
