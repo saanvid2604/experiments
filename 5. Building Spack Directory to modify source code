@@ -1,0 +1,24 @@
+module use /g/data/vk83/modules
+module load spack
+
+cd /g/data/lo70/sd3017/spack/1.1
+
+git clone https://github.com/ACCESS-NRI/ACCESS-ESM1.5.git
+spack env create cice4_dev_1 ACCESS-ESM1.5/spack.yaml
+
+spack env activate -p cice4_dev_1
+
+
+spack concretize -f --reuse-deps
+
+spack install 
+
+    will ask for github username and password for GCOM and UM packages
+    username = saanvid2604
+    password = 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
+
+    *** DO NOT put in your normal password, that system has been discontinued by github. So I had to set up a SSH key... in my git account (expires after 90 days so would need to create a 
+                                                                                                                                            new one if this doesn't work)
+                                                                                                                                            
+spack develop cice4
+
