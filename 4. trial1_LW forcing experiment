@@ -20,5 +20,28 @@ no changes in cice exe part.
 
 Runs!
 
+Run completed!
+
+Create output to check
+
+
+
+2/07/2026
+
+- maybe the run only worked because I did exe = False instead of True (default)
+
+- Look at Claude's responses - very good to go off of
+
+- Step 1: try making any kind of 'write' changes to see if the build process works correctly
+
+      - added this in /drivers/access/cpl_forcing_handler.F90 (line 37%)
+
+!!!new code added by me 02/07/26
+if (my_task == master_task) then
+        write(il_out,*) 'CH TEST: get_sbc_ice reached'
+endif
+!!! finish
+
+
 
   
