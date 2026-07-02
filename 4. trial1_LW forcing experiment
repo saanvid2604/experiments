@@ -42,6 +42,26 @@ if (my_task == master_task) then
 endif
 !!! finish
 
+Step 2: spack concretize -f --fresh
+
+Step 3: spack install (requires git username and ssh password)
+
+Step 4: spack find -p cice4
+
+            ** this will show the exact path we need
+
+Step 5: Go into your experiment directory (trial1) and in config.yaml under the cice submodel component change the exe to the full path
+      /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/cice4-git.development_access-esm1.5-qrsqxfhcyrofah2abccwegttd6zdyk7r/bin/cice_access_360x300_12x1_12p.exe
+
+Step 6: Payu sweep and payu run
+
+
+Step 7: Checking to see if worked. 
+Couple of options to try
+      - grep -R "CH TEST" .
+      - grep -R "CH TEST" work
+      - grep -R "CH TEST" archive
+
 
 
   
