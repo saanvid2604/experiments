@@ -42,7 +42,8 @@ if (my_task == master_task) then
 endif
 !!! finish
 
-Step 2: spack concretize -f --fresh
+Step 2: spack concretize -f --reuse-deps
+
 
 Step 3: spack install (requires git username and ssh password)
 
