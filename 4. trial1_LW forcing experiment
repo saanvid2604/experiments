@@ -65,4 +65,16 @@ Couple of options to try
 
 
 
-  
+
+
+
+
+spack env activate -p cice4_dev_1
+
+spack concretize -f --reuse-deps
+
+spack install
+
+
+
+
