@@ -76,5 +76,36 @@ spack concretize -f --reuse-deps
 spack install
 
 
+8/07/2026
+in ice_therm_vertical.F90
+     ! longwave radiative flux
+         flwdabs =  emissivity * flw(i,j)
+         flwoutn(i,j) = -emissivity * stefan_boltzmann * TsfK**4 * 1.10
+
+         if (i == 10 .and. j == 10) then
+                 write(6,*) 'LWTEST: Tsfk=', TsfK, ' flwout=', 
+flwoutn(i,j)
+         endif   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
