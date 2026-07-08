@@ -88,6 +88,10 @@ flwoutn(i,j)
          endif   
 
 
+in manifests/exe.yaml
+      /scratch/lo70/sd3017/access-esm/bin/cice_access_360x300_12x1_12p.exe
+
+Do not change the manifests/exe.yaml. once you change the config.yaml, then do payu setup, it should automatically change the exe.yaml path
 
 
 
