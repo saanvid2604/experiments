@@ -96,6 +96,19 @@ Do not change the manifests/exe.yaml. once you change the config.yaml, then do p
 
 
 
+9/07/26
+Changes in the oasis3_puta2o.F90 
+
+
+This tells us that the atmosphere is sending to ocean AND ice, even though the file name is suggesting atmostoocean
+##########
+# Field 10 : LW radiation flux down
+##########
+lwflx_io lw_flux 366 3600 1 i2o.nc IGNORED
+cice cice LAG=0 SEQ=+1
+
+
+
 
 
 
