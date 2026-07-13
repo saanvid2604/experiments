@@ -97,7 +97,40 @@ Do not change the manifests/exe.yaml. once you change the config.yaml, then do p
 
 
 9/07/26
-Changes in the oasis3_puta2o.F90 
+Changes in the oasis3_puta2o.F90 (umbase_hg3/src/control/coupling/oasis3_puta2o.F90)
+ ! Set up fields from the T grid
+    DO j=1,oasis_jmt
+      DO i=1,oasis_imt
+
+        ! =================================================================
+        ! TEMP TEST: Massive global longwave boost (+100 W/m^2)
+        ! =================================================================
+        c_longwave(i,j) = c_longwave(i,j) + 100.0
+        ! =================================================================
+
+        ! Copy various heat flux components
+        solar2d(i,j)=c_solar(i,j)
+        blue2d(i,j)=c_blue(i,j)
+        evap2d(i,j)=c_evap(i,j)
+        sublim(i,j)=c_sublim(i,j)
+        longwave2d(i,j)=c_longwave(i,j)
+
+Scroll down slightly to the second block of loops where #if defined(ACCESS_MASK1) lives. Make sure it isn't overwriting your change back to zero:
+
+#define ACCESS_MASK1 1
+#if defined(ACCESS_MASK1)
+! gol124: test using masked stash fields plus zero out land areas
+          ! Sw flux
+          auscom_swflx(i,j) = 0.0
+          ! Lw flux
+          ! FORCE TEST VALUE HERE TO COUPLER
+          auscom_lwflx(i,j) = c_longwave(i,j) 
+          ! Sensible heat flux
+          auscom_shflx(i,j) = 0.0
+          ! Surface pressure
+          auscom_pressure(i,j) = 0.0
+#endif
+
 
 
 This tells us that the atmosphere is sending to ocean AND ice, even though the file name is suggesting atmostoocean
@@ -109,6 +142,54 @@ cice cice LAG=0 SEQ=+1
 
 
 
+13/07/26
+Here is the complete, production-ready Masked Antarctic Script block to replace your temporary global test.
+This code restricts the +100 W/m² longwave perturbation strictly to the Antarctic sea ice pack (South of 50°S). 
+It uses the ice_cov(i,j) variable to ensure open ocean grids remain pristine, satisfying your ghost flux requirement.
+
+Step 1: Apply the Final CodeOpen umbase_hg3/src/control/coupling/oasis3_puta2o.F90, locate your T-grid loop, and update it to look exactly like this:
+    ! Set up fields from the T grid
+    DO j=1,oasis_jmt
+      DO i=1,oasis_imt
+
+        ! =================================================================
+        ! PRODUCTION: ANTARCTIC SEA ICE GHOST FLUX PERTURBATION
+        ! =================================================================
+        ! 1. (LAT_P(j) * (180.0 / pi)) converts the grid latitude from radians to degrees.
+        ! 2. < -50.0 restricts the forcing to the Southern Ocean / Antarctica.
+        ! 3. ice_cov(i,j) > 0.0 ensures it ONLY applies where sea ice is present.
+        IF (((LAT_P(j) * (180.0 / pi)) < -50.0) .AND. (ice_cov(i,j) > 0.0)) THEN
+            
+            ! Apply your targeted downward longwave anomaly (W/m^2)
+            c_longwave(i,j) = c_longwave(i,j) + 100.0
+            
+        ENDIF
+        ! =================================================================
+
+        ! Copy various heat flux components
+        solar2d(i,j)=c_solar(i,j)
+        blue2d(i,j)=c_blue(i,j)
+        evap2d(i,j)=c_evap(i,j)
+        sublim(i,j)=c_sublim(i,j)
+        longwave2d(i,j)=c_longwave(i,j)
+
+
+Step 2: Update the Downstream Mask BlockScroll down in the same file to the #if defined(ACCESS_MASK1) block that you modified earlier. 
+Make sure it explicitly uses your perturbed c_longwave variable so the value is passed through to the coupler:
+
+#define ACCESS_MASK1 1
+#if defined(ACCESS_MASK1)
+! gol124: test using masked stash fields plus zero out land areas
+          ! Sw flux
+          auscom_swflx(i,j) = 0.0
+          ! Lw flux
+          ! CRITICAL: Passes your custom, ice-masked c_longwave value to CICE4
+          auscom_lwflx(i,j) = c_longwave(i,j) 
+          ! Sensible heat flux
+          auscom_shflx(i,j) = 0.0
+          ! Surface pressure
+          auscom_pressure(i,j) = 0.0
+#endif
 
 
 
