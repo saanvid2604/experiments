@@ -27,3 +27,11 @@ Just trying adding a value
         longwave2d(i,j) = c_longwave(i,j) + 10.0
 
         auscom_lwflx(i,j) = c_longwave(i,j) + 10.0
+
+
+ /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/um7-git.2026.04.000_access-esm1.6-2pzzeakancmle52zl3fua5pggbu5kknt/bin/um_hg3.exe
+
+
+
+
+
