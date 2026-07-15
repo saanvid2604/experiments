@@ -1,1 +1,29 @@
+14/07/26
 
+tried adding Antarctic mask but didnt work
+        sublim(i,j)=c_sublim(i,j)
+
+        !my changes 14/07/26
+        IF (j <= 24) THEN
+                longwave2d(i,j) = c_longwave(i,j) + 10.0
+        ELSE
+                longwave2d(i,j) = c_longwave(i,j)
+        END IF
+        !end my changes
+
+        sensible2d(i,j)=c_sensible(i,j)
+
+        !my changes 14/07/26
+        IF (j <= 24) THEN
+                auscom_lwflx(i,j) = c_longwave(i,j) + 10.0
+        ELSE
+                auscom_lwflx(i,j) = c_longwave(i,j)
+        END IF
+        ! my changes end
+
+
+15/07/26
+Just trying adding a value
+        longwave2d(i,j) = c_longwave(i,j) + 10.0
+
+        auscom_lwflx(i,j) = c_longwave(i,j) + 10.0
