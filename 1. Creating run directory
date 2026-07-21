@@ -3,10 +3,6 @@ module load payu
 
 payu clone -b expt -B release-preindustrial+concentrations https://github.com/ACCESS-NRI/access-esm1.5-configs name
 
-
-payu clone https://github.com/ACCESS-NRI/access-esm1.6-configs -s 20250808-spinup-dev-preindustrial+concentrations -b ESM1p6 trial8
-https://github.com/ACCESS-NRI/access-esm1.6-configs
-
 vim config.yaml
   # - Change jobname
   # - Change calendar date
@@ -30,5 +26,26 @@ payu setup (just to check if everything is working)
 payu sweep
 
 pau run -n 10
+
+
+
+
+############ ESM1p6 ####################
+
+module use /g/data/vk83/modules
+module load payu
+module load access-esm1p6/2026.04.000
+
+payu clone https://github.com/ACCESS-Community-Hub/access-esm1.6-dev-experiments -s PI-concentrations-2026-04-22 -b ESM1p6 control_esm1p6
+
+
+
+
+
+
+
+
+
+
 
 
