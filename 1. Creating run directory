@@ -30,7 +30,7 @@ pau run -n 10
 
 
 
-############ ESM1p6 ####################
+############ ESM1p6 #################### (21/07/26)
 
 module use /g/data/vk83/modules
 module load payu
@@ -39,7 +39,16 @@ module load access-esm1p6/2026.04.000
 payu clone https://github.com/ACCESS-Community-Hub/access-esm1.6-dev-experiments -s PI-concentrations-2026-04-22 -b ESM1p6 control_esm1p6
 
 
+In config yaml
+atmosphere:
+  exe: /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/um7-git.2026.04.000_access-esm1.6-2pzzeakancmle52zl3fua5pggbu5kknt/bin/um_hg3.exe
 
+and in this part --
+runlog: true
+manifest:
+  reproduce:
+    exe: false (before it was true)
+    input: true
 
 
 
