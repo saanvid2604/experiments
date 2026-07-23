@@ -90,7 +90,11 @@ SUBROUTINE oasis3_puta2o(                                         &
         ! Sensible heat flux
 
 
+password for this (expires in 30 days) = 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
 
+new link: /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/um7-git.2026.04.000_access-esm1.6-2pzzeakancmle52zl3fua5pggbu5kknt/bin/um_hg3.exe
 
+*** note: when spack installing, it installs the UM but it also starts to install the access-esm1p6 but says warning the access git file exists and wont overwrite.
+so another hunch is that we also need to put the access-esm1p6 path in config. or it also needs to be overwritten
 
 
