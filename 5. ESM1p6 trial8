@@ -34,4 +34,63 @@ Just trying adding a value
 
 
 
+23/07/26
+
+######### BLOCK ONE ############
+SUBROUTINE oasis3_puta2o(                                         &
+#include "argd1.h"
+#include "arg_atm_fields.h"
+  PUT_STEP,cmessage)
+
+  USE oasis3_atm_data_mod
+  !new code added 23/07/26
+  USE trignometric_mod, ONLY: true_latitude
+  !done
+
+#if defined(ACCESS)
+  USE auscom_cpl_data_mod
+  USE dump_sent
+#endif
+
+############ BLOCK TWO ###############
+  REAL :: latentHeatOfFus=lf
+
+  ! my changes 14/07/26
+  REAL, PARAMETER :: antarctic_lat_threshold = -1.047198  ! -60 deg in radians
+  ! end my changes
+
+  INTEGER :: i              ! Loop counter
+
+
+############# BLOCK THREE ############
+      sublim(i,j)=c_sublim(i,j)
+
+        !my changes 23/07/26
+        if (true_latitude(i,j) < antarctic_lat_threshold) then
+          longwave2d(i,j) = c_longwave(i,j) + 10.0
+        else
+          longwave2d(i,j) = c_longwave(i,j)
+        endif
+        !end my changes
+
+        sensible2d(i,j)=c_sensible(i,j)
+
+############# BLOCK FOUR ###############
+        ! Sw flux
+        auscom_swflx(i,j) = c_solar(i,j)
+
+        !my changes 23/07/26
+        if (true_latitude(i,j) < antarctic_lat_threshold) then
+          auscom_lwflx(i,j) = c_longwave(i,j) + 10.0
+        else
+          auscom_lwflx(i,j) = c_longwave(i,j)
+        endif
+        ! my changes end
+
+        ! Sensible heat flux
+
+
+
+
+
 
