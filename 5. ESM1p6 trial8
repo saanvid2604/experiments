@@ -107,6 +107,23 @@ trying this without lat/lon mask, just + 50.0 wm-2
 /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/um7-git.2026.04.000_access-esm1.6-2pzzeakancmle52zl3fua5pggbu5kknt/bin/um_hg3.exe 
 
 
+27/07/26
+payu clone -b expt -B release-piControl https://github.com/ACCESS-NRI/access-esm1.6-configs.git trial11/trial12
++ 50 wm-2
+
+these two trials failed because of numerical instability: my source code changes of +50wm-2 were causing physical properties to blow up. 
+After 2 years of drift, a variable likely exceeded realistic limits, triggering an internal model validation abort.
+
+I found this by doing grep -iE "error|fail|stop|abort" archive/output001/atmosphere/*
+where i got:
+archive/output001/atmosphere/atm.fort6.pe0: Error in moisture              =    5372384151787.33       KG
+archive/output001/atmosphere/atm.fort6.pe0: Error as % of change           =    5.85287507514917     
+archive/output001/atmosphere/atm.fort6.pe0: ERROR IN ENERGY BUDGET       =   0.12025E+21 J/ 
+
+My change has completely broken the atmosphere water vapor and mass conservation loops in the UM.
+A moisture error of over 4 trillion kilograms (4228751206931.99 KG) means the model is wildly creating or destroying water 
+out of thin air due to numerical instability. The massive energy budget error (0.62140E+20 Joules) confirms that the sheer volume 
+of heat energy you added caused the underlying physics equations to diverge and crash.
 
 
 
