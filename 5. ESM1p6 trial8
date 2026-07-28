@@ -126,7 +126,28 @@ out of thin air due to numerical instability. The massive energy budget error (0
 of heat energy you added caused the underlying physics equations to diverge and crash.
 
 
+28/07/26
+previous experiment didnt work
 
+trial13 (2:18pm) changes
+
+USE trignometric_mod, ONLY: true_latitude
+
+!my changes (28/07/26) Antarctic sea-ice-only longwave perturbation
+IF (true_latitude(i,j) < 0.0 .AND. ICE_FRACTION(i,j,1) > 0.15) THEN
+        longwave2d(i,j) = c_longwave(i,j) + 20.0
+ELSE
+        longwave2d(i,j) = c_longwave(i,j)
+END IF
+!end my changes
+
+!my changes (28/07/26)
+IF (true_latitude(i,j) < 0.0 .AND. ICE_FRACTION(i,j,1) > 0.15) THEN
+        auscom_lwflx(i,j) = c_longwave(i,j) + 20.0
+ELSE
+        auscom_lwflx(i,j) = c_longwave(i,j)
+END IF
+!end my changes
 
 
 
