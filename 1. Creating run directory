@@ -36,7 +36,7 @@ module use /g/data/vk83/modules
 module load payu
 module load access-esm1p6/2026.04.000
 
-payu clone https://github.com/ACCESS-Community-Hub/access-esm1.6-dev-experiments -s PI-concentrations-2026-04-22 -b ESM1p6 control_esm1p6
+payu clone -b expt -B release-piControl https://github.com/ACCESS-NRI/access-esm1.6-configs.git name
 
 
 In config yaml
