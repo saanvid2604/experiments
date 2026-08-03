@@ -51,6 +51,13 @@ manifest:
     input: true
 
 
+payu setup (to check the manifests/exe.yaml)
+
+payu sweep
+
+payu run
+
+
 
 
 
