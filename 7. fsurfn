@@ -1,0 +1,27 @@
+module use /g/data/vk83/modules
+
+module load payu
+module load spack
+module load access-esm1p6/2026.04.000
+
+spack env activate -p cice5_dev
+cd cice5_dev
+
+cd cice5/drivers/access/ice_coupling.F90
+
+vim ice_coupling.F90
+
+Near line 193
+
+            raicen        = c1 / aicen(i,j)
+#endif
+            fsurfn(i,j)   = fsurfn_f(i,j,n,iblk)*raicen + 20.0_dbl_kind ⬅️⬅️
+            fcondtopn(i,j)= fcondtopn_f(i,j,n,iblk)*raicen
+            flatn(i,j)    = flatn_f(i,j,n,iblk)*raicen
+	    fsensn(i,j)   = fsensn_f(i,j,n,iblk)*raicen
+
+         enddo
+
+spack concretize -f --reuse-deps
+
+spack install
