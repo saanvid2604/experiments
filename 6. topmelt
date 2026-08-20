@@ -2,13 +2,29 @@ module use /g/data/vk83/modules
 
 module load payu
 module load spack
-module load access-esm2026..004
-
+module load access-esm1p6/2026.04.000
 
 spack env activate -p um7_1p6_new
 cd um7_1p6_new
 
-cd um7/umbasehg3/src/control/coupling
+cd um7/umbase_hg3/src/control/coupling
 
 vim oasis3_puta2o.F90
+
+Near line 138
+
+    ! Topmelt and Botmelt (category)
+    DO k=1,nice
+      DO j=1,oasis_jmt
+        DO i=1,oasis_imt
+          topmeltn(i,j,k) = c_topmeltn(i,j,k) + 20.0 ⬅️⬅️⬅️
+          botmeltn(i,j,k) = c_botmeltn(i,j,k)
+        END DO
+      END DO
+    END DO
+
+spack concretize -f --reuse-deps
+
+spack install
+
 
