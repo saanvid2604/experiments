@@ -1,0 +1,14 @@
+module use /g/data/vk83/modules
+
+module load payu
+module load spack
+module load access-esm2026..004
+
+
+spack env activate -p um7_1p6_new
+cd um7_1p6_new
+
+cd um7/umbasehg3/src/control/coupling
+
+vim oasis3_puta2o.F90
+
