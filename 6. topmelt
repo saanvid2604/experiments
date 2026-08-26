@@ -28,3 +28,134 @@ spack concretize -f --reuse-deps
 spack install
 
 
+
+18/08/26
+
+#include "ctime.h" !new code: gives I_YEAR, I_MONTH, I_DAY
+
+  REAL :: melt_offset !new code: to declare
+
+    ! new code start (19/08/26)
+    SELECT CASE (I_MONTH)
+      CASE (12, 1, 2)
+        melt_offset = 10.0
+      CASE (3, 4, 5)
+        melt_offset = 20.0
+      CASE (6, 7, 8)
+        melt_offset = 40.0
+      CASE (9, 10, 11)
+        melt_offset = 30.0
+    END SELECT
+
+
+    ! Topmelt and Botmelt (category)
+    DO k=1,nice
+      DO j=1,oasis_jmt
+        global_j = g_datastart(2,mype) + j - 1 !new code (17/08/26)
+        DO i=1,oasis_imt
+          !topmeltn(i,j,k) = c_topmeltn(i,j,k)
+
+          !new code start (14/08/26)
+          IF (i==1 .AND. k==1) THEN
+            PRINT *, 'DEBUG mype=', mype, 'j=', j, ' g_datastart(2,mype)=', &
+                    g_datastart(2,mype), ' global_j=', global_j, ' apply=', (global_j<=33)
+          END IF
+
+          IF (global_j <= 33) THEN
+            topmeltn(i,j,k) = c_topmeltn(i,j,k) + melt_offset
+          ELSE
+            topmeltn(i,j,k) = c_topmeltn(i,j,k)
+          END IF
+          !end new code
+
+          botmeltn(i,j,k) = c_botmeltn(i,j,k)
+        END DO
+      END DO
+    END DO
+
+
+****notes: latitudinal boundary didn't work. but seasonal values were applied and worked. 
+
+
+   USE oasis3_atm_data_mod
+  !new code added 23/07/26
+  USE trignometric_mod, ONLY: true_latitude
+  USE netcdf
+  !done
+
+#include "ctime.h" !new code added 31/07/26
+
+  !my changes 23/07/26
+  !REAL, PARAMETER :: antarctic_lat_threshold = -1.047198 !-60deg in radians
+  !end my change
+
+!my changes 23/07/26
+        !if (true_latitude(i,j) < antarctic_lat_threshold) then
+        !        longwave2d(i,j) = c_longwave(i,j) + 50.0
+
+        !else
+        !        longwave2d(i,j) = c_longwave(i,j)
+        !endif
+        !end my changes
+
+
+
+
+
+##new
+    ! new code start (19/08/26)
+    SELECT CASE (I_MONTH)
+      CASE (12, 1, 2)
+        melt_offset = 20.0
+      CASE (3, 4, 5)
+        melt_offset = 50.0
+      CASE (6, 7, 8)
+        melt_offset = 70.0
+      CASE (9, 10, 11)
+        melt_offset = 60.0
+    END SELECT
+
+
+    ! Topmelt and Botmelt (category)
+    DO k=1,nice
+      DO j=1,oasis_jmt
+        global_j = g_datastart(2,mype) + j - 1 !new code (17/08/26)
+        DO i=1,oasis_imt
+          !topmeltn(i,j,k) = c_topmeltn(i,j,k)
+
+          !new code start (14/08/26)
+          IF (i==1 .AND. k==1) THEN
+            PRINT *, 'DEBUG mype=', mype, 'j=', j, ' g_datastart(2,mype)=', &
+                    g_datastart(2,mype), ' global_j=', global_j, ' apply=', (global_j<=33)
+          END IF
+
+          IF (global_j <= 33) THEN
+            topmeltn(i,j,k) = c_topmeltn(i,j,k) + melt_offset
+          ELSE
+            topmeltn(i,j,k) = c_topmeltn(i,j,k)
+          END IF
+
+          IF (true_latitude
+
+
+
+          !end new code
+
+          botmeltn(i,j,k) = c_botmeltn(i,j,k)
+        END DO
+      END DO
+    END DO
+
+
+
+[+]  vgufmbq      ^um7@2026.04.001+full build_system=generic dev_path=/g/data/lo70/sd3017/spack/1.1/environments/um7_1p6_new/um7 optim=high platform=linux os=rocky8 target=x86_64_v4 %c,fortran=oneapi@2025.2.0
+
+
+
+
+
+
+
+
+
+
