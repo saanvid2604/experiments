@@ -154,6 +154,54 @@ spack install
 
 
 
+control]$ grep -rn "true_latitude" .
+./top_level/um_index_a.F90:168:!    6.2  05/01/06   Add true_latitude to A_IXCON. Yongming Tang
+./top_level/atm_step.F90:2367:     &,     f3_at_u, true_longitude, true_latitude,                     &
+./top_level/atm_step.F90:7987:     &,     f3_at_u, true_longitude, true_latitude                      &
+./top_level/setcona.F90:226:     &  ,true_latitude_b(row_length, rows)                              &
+./top_level/setcona.F90:872:      If (.not.allocated(true_latitude)) Then
+./top_level/setcona.F90:873:        Allocate (true_latitude (row_length, rows))
+./top_level/setcona.F90:1148:     &,             true_latitude, true_longitude                       &
+./top_level/setcona.F90:1154:            true_latitude(i,j) = true_latitude(i,j) * Pi_over_180
+./top_level/setcona.F90:1189:     &,             true_latitude_b, true_longitude_b                   &
+./top_level/glue_rad-rad_ctl2.F90:97:     &, f3_at_u, true_longitude, true_latitude                          &
+./top_level/glue_rad-rad_ctl2.F90:664:     &, true_latitude(row_length, rows)                                 &
+./top_level/glue_rad-rad_ctl2.F90:930:     &, sin_true_latitude(row_length, rows)                             &
+./top_level/glue_rad-rad_ctl2.F90:1433:            sin_true_latitude(i,j) = f3_at_u(i,j) / two_Omega
+./top_level/glue_rad-rad_ctl2.F90:1762:     &                 at_extremity,asin(sin_true_latitude(1,1)),       &
+./top_level/glue_rad-rad_ctl2.F90:2181:     &                sin_true_latitude,                                &
+./top_level/glue_rad-rad_ctl2.F90:2625:     &        sin_true_latitude(first_point,1),                         &
+./top_level/glue_rad-rad_ctl2.F90:3297:     &                sin_true_latitude,                                &
+./top_level/glue_rad-rad_ctl2.F90:4402:     &        sin_true_latitude(ptr_local,1),                           &
+./top_level/atmos_physics1.F90:99:     &, f3_at_u, true_longitude, true_latitude,                         &
+./top_level/atmos_physics1.F90:841:     &, true_latitude(row_length, rows)
+./top_level/atmos_physics1.F90:2127:     &, f3_at_u, true_longitude, true_latitude                          &
+./coupling/oasis3_puta2o.F90:13:  USE trignometric_mod, ONLY: true_latitude !new code 26/08/26
+./coupling/oasis3_puta2o.F90:179:          IF (true_latitude(i,j,k) < antarctic_lat_threshold) THEN
+
+! Local variables
+      REAL                                                              &
+     &   Delta_lambda_wk                                                &
+                             ! EW (x) grid spacing in degrees
+     &  ,Delta_phi_wk                                                   &
+                             ! NS (y) grid spacing in degrees
+     &  ,Base_phi_wk                                                    &
+                             ! Latitude of first theta point in degrees
+     &  ,Base_lambda_wk                                                 &
+                             ! Longitude of first theta point in degrees
+     &  ,latitude_rot(row_length, rows)                                 &
+                                         ! rot. latit. in degrees (LAM)
+     &  ,longitude_rot(row_length, rows)                                &
+                                         ! rot. longit. in degrees (LAM)
+     &  ,true_latitude_b(row_length, rows)                              &
+                                           ! true latitude on B-grid
+     &  ,true_longitude_b(row_length,rows)                              &
+                                           ! true longitude on B-grid
+     &  ,bear_rot_NP(row_length, rows)                                  &
+                                         ! Bearing of 'pseudo' N pole
+
+
+
 
 
 
