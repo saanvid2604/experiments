@@ -202,6 +202,10 @@ control]$ grep -rn "true_latitude" .
 
 
 
+
+
+28/08/26
+
   USE trignometric_mod, ONLY: true_latitude !new code 26/08/26
 
 #include "ctime.h" !new code: gives I_YEAR, I_MONTH, I_DAY
@@ -239,10 +243,11 @@ control]$ grep -rn "true_latitude" .
           IF (i==1 .AND. k==1) THEN
             PRINT *, 'DEBUG mype=', mype, 'j=', j, ' g_datastart(2,mype)=', &
                     g_datastart(2,mype), ' global_j=', global_j, ' apply=', (global_j<=33)
+          END IF
 
 
           !new code (26/08/26)
-          IF (true_latitude(i,j,k) < antarctic_lat_threshold) THEN
+          IF (true_latitude(i,j) < antarctic_lat_threshold) THEN
                   topmeltn(i,j,k) = c_topmeltn(i,j,k) + melt_offset
           ELSE
                   topmeltn(i,j,k) = c_topmeltn(i,j,k)
@@ -253,6 +258,13 @@ control]$ grep -rn "true_latitude" .
         END DO
       END DO
     END DO
+
+
+
+
+
+
+
 
 
 
