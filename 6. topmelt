@@ -202,6 +202,62 @@ control]$ grep -rn "true_latitude" .
 
 
 
+  USE trignometric_mod, ONLY: true_latitude !new code 26/08/26
+
+#include "ctime.h" !new code: gives I_YEAR, I_MONTH, I_DAY
+
+!     Local variables
+  ! Some of the following constants really should
+  ! come from somewhere central rather than being defined here 
+  REAL :: latentHeatOfCond=lc
+  REAL :: latentHeatOfFus=lf
+  REAL :: melt_offset !new code: to declare
+  REAL, PARAMETER :: antarctic_lat_threshold = -1.047198 !60deg in radians (new code 26/08/26)
+
+
+  ! new code start (19/08/26)
+    SELECT CASE (I_MONTH)
+      CASE (12, 1, 2)
+        melt_offset = 20.0
+      CASE (3, 4, 5)
+        melt_offset = 50.0
+      CASE (6, 7, 8)
+        melt_offset = 70.0
+      CASE (9, 10, 11)
+        melt_offset = 60.0
+    END SELECT
+
+
+    ! Topmelt and Botmelt (category)
+    DO k=1,nice
+      DO j=1,oasis_jmt
+        global_j = g_datastart(2,mype) + j - 1 !new code (17/08/26)
+        DO i=1,oasis_imt
+          !topmeltn(i,j,k) = c_topmeltn(i,j,k)
+
+          !new code start (14/08/26)
+          IF (i==1 .AND. k==1) THEN
+            PRINT *, 'DEBUG mype=', mype, 'j=', j, ' g_datastart(2,mype)=', &
+                    g_datastart(2,mype), ' global_j=', global_j, ' apply=', (global_j<=33)
+
+
+          !new code (26/08/26)
+          IF (true_latitude(i,j,k) < antarctic_lat_threshold) THEN
+                  topmeltn(i,j,k) = c_topmeltn(i,j,k) + melt_offset
+          ELSE
+                  topmeltn(i,j,k) = c_topmeltn(i,j,k)
+          END IF
+          !end new code
+
+          botmeltn(i,j,k) = c_botmeltn(i,j,k)
+        END DO
+      END DO
+    END DO
+
+
+
+
+
 
 
 
