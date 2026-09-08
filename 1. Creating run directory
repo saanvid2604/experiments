@@ -43,6 +43,8 @@ In config yaml
 atmosphere:
   exe: /g/data/lo70/sd3017/spack/1.1/release/linux-x86_64_v4/um7-git.2026.04.000_access-esm1.6-2pzzeakancmle52zl3fua5pggbu5kknt/bin/um_hg3.exe
 
+Restart path:/g/data/jq44/access-nri/access-esm1p6/global/piControl/r1i1p1f1/2026.04.22/restart420
+
 and in this part --
 runlog: true
 manifest:
