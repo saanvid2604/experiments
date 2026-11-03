@@ -1,0 +1,56 @@
+######################################################################## ATMOSPHERE ########################################################################
+
+atmosphere/STASHC
+
+edited this using ! commenting out 
+
+But did ls -l STASHC which pointed to STASHC --> diagnostic_profiles/STASHC_std_concentration
+
+==> so that means its hyperlinked. So editing the atmosphere/STASHC automatically edited the diagnostic_profiles/STASHC_std_concentrations (and vice versa?)
+
+
+######################################################################## OCEAN ########################################################################
+
+ocean/diag_table
+
+ls -l diag_table --> diagnostic_profiles/diag_table_standard (that means out of all of the other files, the main one 'diag_table' is hyperlinked with the diag_table_standard
+
+but have to do a few steps to make edits:
+  1. Go to folder
+      cd /scratch/lo70/sd3017/access-esm/3.fsurf/trial22_restart60/ocean/diagnostic_profiles/source_yaml_files
+  2. Copy the hyperlinked standard one to the name the script expects (the script only reads a file called exactly diag_table_source.yaml in the folder you run in from)
+      cp diag_table_standard_source.yaml diag_table_source.yaml
+  3. Edit your new copy
+      vim diag_table_source.yaml 
+      
+        e.g. putting # to comment out variables that aren't needed
+
+        also adding daily fields (copied the format from a previous list, and then added surface_temp and surface_salt)
+            'daily 2d ocean fields':
+        defaults:  # these can be overridden for individual fields below
+            file_name_dimension: 2d  # descriptor for filename, e.g. 3d, 2d, scalar
+            output_freq: 1  # integer: output sampling frequency in output_freq_units (0: every timestep; -1: only at end of run)
+            output_freq_units: days  # time units for output: years, months, days, hours, minutes, or seconds
+        fields:
+            surface_temp:
+            surface_salt:
+
+    4. Generate/Write the new diag_table
+    python3 make_diag_table.py
+
+    5. Move it up and give it a clear name
+    mv diag_table ../diag_table_mine
+
+    6. Point the symlink at it
+    ln -sf diagnostic_profiles/diag_table_mine diag_table
+    ls -l ocean/diag_table (so now you should see diag_table --> diagnostic_profiles/diag_table_mine)
+
+
+
+######################################################################## ICE ########################################################################
+
+only want to output daily variable for f_aice 
+
+ice/ice_history.nml
+
+  f_aice = 'dm' (to output for daily and monthly)
