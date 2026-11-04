@@ -8,11 +8,15 @@ But did ls -l STASHC which pointed to STASHC --> diagnostic_profiles/STASHC_std_
 
 ==> so that means its hyperlinked. So editing the atmosphere/STASHC automatically edited the diagnostic_profiles/STASHC_std_concentrations (and vice versa?)
 
+ORIGINAL
  ### Start of user STASH requests for ATMOS ###
  &STASHNUM NUM_REQ=265, NUM_DOM=38,  NUM_TIM=22, NUM_USE=12 /
 
+CHANGED
  ### Start of user STASH requests for ATMOS ###
- &STASHNUM NUM_REQ=105, NUM_DOM=38,  NUM_TIM=22, NUM_USE=12 /
+ &STASHNUM NUM_REQ=82, NUM_DOM=38,  NUM_TIM=22, NUM_USE=12 /
+
+ --> the STASHNUM NUM_REQ changed to 82, as that is the amount of variables left after commenting out unnecessary ones.
 
 
 ######################################################################## OCEAN ########################################################################
