@@ -19,6 +19,13 @@ CHANGED
  --> the STASHNUM NUM_REQ changed to 82, as that is the amount of variables left after commenting out unnecessary ones.
 
 
+#########   new  (5/11/26) #########
+trial22_atmosoutputsnew
+
+deleted the unnecessary ones
+
+total 55 remaining - changed NUM_REQ = 55
+
 ######################################################################## OCEAN ########################################################################
 
 ocean/diag_table
@@ -28,7 +35,7 @@ ls -l diag_table --> diagnostic_profiles/diag_table_standard (that means out of 
 but have to do a few steps to make edits:
   1. Go to folder
       cd /scratch/lo70/sd3017/access-esm/3.fsurf/trial22_restart60/ocean/diagnostic_profiles/source_yaml_files
-  2. Copy the hyperlinked standard one to the name the script expects (the script only reads a file called exactly diag_table_source.yaml in the folder you run in from)
+  2. Copy the hyperlinked standard one to the name the script expects (the .py script only reads a file called exactly diag_table_source.yaml in the folder you run in from)
       cp diag_table_standard_source.yaml diag_table_source.yaml
   3. Edit your new copy
       vim diag_table_source.yaml 
