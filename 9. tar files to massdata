@@ -1,0 +1,124 @@
+to move files from /scratch/lo70/sd3017/access-esm/archive to /g/data/k10/sd3017
+
+1. albedo_runs
+
+all albedo files, saved in archive/albedo_experiments_list.txt:
+
+albedo770_high-expt-fd487ac2
+albedo_pi570-expt-0adc31fb
+ACCESS-ESM1.6-trial7-e5753580
+testing_esm1.5-expt1-b3da9c06
+new_albedo_570pi-expt-9dc5108f
+albedo_570pi-expt-3f2e6276
+all_albedo_1-expt-57312eb8
+bareice_albedo1-expt-b0534e3e
+both_snow1-expt-fe95d748
+cold-dry_snow1-expt-5e5c939b
+melting_snow1-expt-f26db591
+albedo770-expt-fb5ec0cd
+albedo770_2-expt-c2d00750
+albedo770_high-expt-de78c830
+albedo770_initialcond-expt-39b69daa
+albedo880_2-expt-13a34294
+albedo880_3-expt-16c1eb05
+albedo880-expt-ababd913
+albedo+rparameters880-expt-a7fbc311
+atmosphere-expt-149dfb3d
+bareice_albedo-expt-22d5e993
+cold-dry_snow-expt-42be3f9b
+melting_snow0.99-expt-4fd1d5bf
+cold-dry_snow0.99-expt-80984b30
+melting_snow-expt-45afc1d0
+new_albedo570pi-expt-25048195
+all_albedo_exacthalf-expt-8da16c0f
+all_albedo_half-expt-30d025a8
+both_snow0.99-expt-298b358f
+both_snow-expt-7b65cc18
+bareice_albedo0.99-expt-39d39357
+all_albedo_0.2-expt-a7666311
+all_albedo_0.99-expt-8c6e5573
+all_albedo_0-expt-8029c0a5
+
+
+2. LW_forcing_trials
+trial1-expt-8a1c3809 
+trial2-expt-59e970a5  
+trial3-expt-3900dbc2
+trial4-expt-7d830288
+trial5-expt-f72567c7
+trial6-expt-16e14fb8 
+trial7-expt-07d74c7d 
+trial8-ESM1p6-f66a7f3d
+trial9-ESM1p6-c8ba9720
+trial10-ESM1p6-5554b7cf
+trial11-ESM1p6-c7797364
+trial12-expt-212639ac
+trial13-ESM1p6-3e908238
+trial16-expt-5a21f846
+
+*** missing
+control_1month: control_1month-expt-ce0a88ce
+control_1month_ESM1p6:	control_1month_ESM1p6-ESM1p6-ca8e9adc
+trial 14:	trial14-expt-d010d36a
+trial 15:	trial15-expt-704e5bf8
+
+
+3. fsurf
+trial1-expt-208beba9 
+trial2-trial2-31728be1
+monthly_hfx_trial3-expt-a59289e9
+trial4-expt-660863e6
+trial5-expt-de4783a3
+trial6-expt-624e7d01
+trial7-expt-2cbdf9a8
+trial8-expt-14251d19
+trial9-expt-a8379c57
+trial10-expt-7aa949b1
+trial11-expt-7db3f647
+trial12-expt-0c5fee9a
+trial13-expt-8945abae
+trial14-expt-9bd3c9b5
+trial15-expt-abe397fe
+trial16-expt-1176a256
+trial17-expt-dd249012 
+trial18-expt-cf8c42bc   
+trial19-expt-cfa1ebf9
+trial20-expt-2d04aa82    
+trial21-expt-d826f851  
+trial22-expt-ade7ca0f
+trial22_atmosoutputs-expt-6bd93568     
+trial22_atmosoutputsnew-expt-c8a42fc7
+trial22_modelouputs-expt-9d046481
+trial22_oceanoutputs-expt-90d12649   
+trial22_restart060-expt-7a04f91a 
+trial23-expt-44ffebd1
+
+
+4. Extras
+trial1-expt-6679ae95
+trial1-expt-9e2a04d2 
+trial2-expt-5c7d7e76  
+trial2-expt-71e08abd
+trial3-expt-6ca9d3e5
+trial3-expt-a86ed9c9
+trial3-expt-d5c98946
+trial4-expt-e0f20314
+trial5-expt-3f4c3000                                 
+trial6-expt-005fcc19
+trial7-expt-ec8fbc6e
+trial7-release-piControl-dbe658ac
+trial15-expt-b1ee47cf
+trial8-ESM1p6-9a8ef303
+trial8-expt-a7808f74 
+trial21_final-expt-54285556  
+trial22_restart60-expt-b2ebb1c7
+
+
+Currently running final: heatflux_perturbation-expt-79714537
+
+
+
+
+
+
+
